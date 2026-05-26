@@ -1,80 +1,74 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. HORLOGE (Elle va remarcher car on a enlevé les erreurs avant)
+    // --- HORLOGE ---
+    const clockEl = document.getElementById('clock');
     setInterval(() => { 
-        const clockEl = document.getElementById('clock');
         if(clockEl) clockEl.textContent = new Date().toLocaleTimeString('fr-FR'); 
     }, 1000);
 
-    // 2. TO-DO & PROGRESSION
+    // --- TO-DO LIST (Optimisée) ---
     const todoInput = document.getElementById('todoInput');
     const addBtn = document.getElementById('addTodo');
     const list = document.getElementById('todoList');
-    const progText = document.getElementById('progression');
-    const progFill = document.getElementById('progress-fill');
-    const statMsg = document.getElementById('stat-message');
 
     function updateStats() {
-        if(!list) return; // Sécurité
         const items = list.querySelectorAll('li');
         const done = list.querySelectorAll('.completed').length;
         const pc = items.length === 0 ? 0 : Math.round((done / items.length) * 100);
         
-        if(progText) progText.textContent = pc + "%";
-        if(progFill) progFill.style.width = pc + "%";
-        if(statMsg) statMsg.textContent = `${done} / ${items.length} tâche(s) faite(s)`;
+        document.getElementById('progression').textContent = pc + "%";
+        document.getElementById('progress-fill').style.width = pc + "%";
+        document.getElementById('stat-message').textContent = `${done} / ${items.length} tâche(s) faite(s)`;
     }
 
-    if(addBtn) {
-        addBtn.addEventListener('click', () => {
-            const taskText = todoInput.value.trim();
-            if(taskText) {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <span>${taskText}</span>
-                    <button class="del-btn">×</button>`;
-                
-                li.addEventListener('click', (e) => {
-                    if(e.target.className !== 'del-btn') {
-                        li.classList.toggle('completed');
-                        updateStats();
-                    }
-                });
+    addBtn.addEventListener('click', () => {
+        const taskText = todoInput.value.trim();
+        if(!taskText) return;
 
-                li.querySelector('.del-btn').addEventListener('click', () => { 
-                    li.remove(); 
-                    updateStats(); 
-                });
-                
-                list.appendChild(li);
-                todoInput.value = "";
+        const li = document.createElement('li');
+        li.innerHTML = `<span>${taskText}</span><button class="del-btn">×</button>`;
+        
+        // Clic sur la tâche pour cocher
+        li.addEventListener('click', (e) => {
+            if(e.target.tagName !== 'BUTTON') {
+                li.classList.toggle('completed');
                 updateStats();
             }
         });
-    }
 
-    // 3. NOTES
+        // Suppression
+        li.querySelector('.del-btn').addEventListener('click', () => { 
+            li.remove(); 
+            updateStats(); 
+        });
+        
+        list.appendChild(li);
+        todoInput.value = "";
+        updateStats();
+    });
+
+    // --- BLOC-NOTES (Corrigé) ---
     const saveBtn = document.getElementById('saveNote');
     const nTitle = document.getElementById('nTitle');
     const nBody = document.getElementById('nBody');
     const savedBox = document.getElementById('savedNotes');
 
-    if(saveBtn) {
-        saveBtn.addEventListener('click', () => {
-            if(nTitle.value || nBody.value) {
-                const div = document.createElement('div');
-                div.className = 'saved-note-item';
-                div.style.marginBottom = "10px";
-                div.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; width:100%;">
-                        <strong>${nTitle.value || "Note"}</strong>
-                        <button class="del-btn" style="background:none; border:none; color:#555; cursor:pointer;">×</button>
-                    </div>`;
-                
-                div.querySelector('.del-btn').addEventListener('click', () => div.remove());
-                savedBox.prepend(div);
-                nTitle.value = ""; 
-                nBody.value = "";
-            }
-        });
-    }
+    saveBtn.addEventListener('click', () => {
+        if(!nTitle.value && !nBody.value) return;
+
+        const noteDiv = document.createElement('div');
+        noteDiv.className = 'note-item';
+        noteDiv.style.cssText = "background:#222; padding:10px; border-radius:8px; margin-bottom:8px; position:relative;";
+        
+        noteDiv.innerHTML = `
+            <strong>${nTitle.value || "Sans titre"}</strong>
+            <p style="font-size:0.85rem; color:#ccc;">${nBody.value}</p>
+            <button class="del-btn" style="position:absolute; right:10px; top:10px;">×</button>
+        `;
+
+        noteDiv.querySelector('.del-btn').addEventListener('click', () => noteDiv.remove());
+        savedBox.prepend(noteDiv);
+        
+        nTitle.value = ""; 
+        nBody.value = "";
+    });
 });
