@@ -72,3 +72,50 @@ body {
     .container { grid-template-columns: 1fr; grid-template-areas: "header" "main"; }
     .sidebar { display: none; }
 }
+
+/* Style pour les champs de saisie du bloc-notes */
+.note-input-area input, 
+.note-input-area textarea {
+    width: 100%;
+    background: #111; /* Un peu plus clair que le fond général */
+    border: 1px solid #333;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    outline: none;
+    transition: 0.3s;
+    font-size: 0.95rem;
+}
+
+/* Effet au survol et au clic (focus) */
+.note-input-area input:focus, 
+.note-input-area textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* Ajustement spécifique du textarea */
+.note-input-area textarea {
+    resize: vertical; /* Permet d'agrandir la zone */
+    min-height: 80px;
+    margin-top: 10px;
+}
+
+/* Style du bouton sauvegarder pour qu'il soit cohérent */
+#saveNote {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#saveNote:hover {
+    filter: brightness(1.2);
+    box-shadow: 0 0 15px var(--accent-glow);
+}
