@@ -10,19 +10,17 @@
 
     <div class="container">
         <aside class="sidebar">
-            <div class="logo-area">LILY<span>tab</span></div>
-            <nav class="menu">
-                <a href="#" class="active">🏠 Accueil</a>
-                <a href="index.html">🎬 LilyTab</a>
-            </nav>
-        </aside>
+    <div class="logo-area">LILY<span>tab</span></div>
+    <nav class="menu">
+        <a href="#" class="active">🏠 Accueil</a>
+        </nav>
+</aside>
 
         <header class="header">
             <h2 id="userWelcome">Tableau de bord</h2>
         </header>
 
         <main class="main-content">
-            
             <div class="card card-wide">
                 <h3>Heure de session</h3>
                 <div id="clock">00:00:00</div>
@@ -40,26 +38,25 @@
             </div>
 
             <div class="card card-notes">
-                <div class="note-header">
-                    <h3>Bloc-notes rapide</h3>
-                    <button class="add-note-btn" id="clearNote">×</button>
+                <h3>Bloc-notes rapide</h3>
+                <div class="note-input-area">
+                    <input type="text" id="nTitle" placeholder="Titre de la note">
+                    <textarea id="nBody" placeholder="Écrivez vos idées ici..."></textarea>
+                    <button id="saveNote">Sauvegarder</button>
                 </div>
-                <input type="text" class="note-title" id="nTitle" placeholder="Titre de la note">
-                <textarea class="note-body" id="nBody" placeholder="Écrivez vos idées ici..."></textarea>
+                <div id="savedNotes"></div>
             </div>
 
             <div class="card card-todo">
                 <h3>Liste des tâches</h3>
-                <div class="input-row">
+                <div class="input-row" style="display: flex; gap: 10px;">
                     <input type="text" id="todoInput" placeholder="Ajouter un projet...">
                     <button id="addTodo">Add</button>
                 </div>
                 <ul id="todoList"></ul>
             </div>
-
         </main>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
