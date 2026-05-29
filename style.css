@@ -1,18 +1,20 @@
 :root {
-    --accent: #D1317A;
-    --accent-glow: rgba(209, 49, 122, 0.4);
-    --bg-black: #0a0a0a;
-    --card-bg: #161616;
-    --text-grey: #888;
+    --accent: #c87941;          /* Ton Ocre élégant */
+    --accent-glow: rgba(200, 121, 65, 0.2);
+    --bg-page: #fcfbf9;         /* Fond crème très léger */
+    --card-bg: #ffffff;         /* Blanc pur pour les cartes */
+    --sidebar-bg: #f4f2ef;      /* Gris très clair pour le menu */
+    --text-main: #332d2a;       /* Marron foncé pour le texte */
+    --text-grey: #8a827d;       /* Gris chaud pour les labels */
+    --border: #e0dcd9;          /* Bordure fine */
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
 body { 
-    background-color: var(--bg-black); 
-    color: white; 
-    min-height: 100vh; /* Utilise min-height au lieu de height */
-    overflow-x: hidden; 
+    background-color: var(--bg-page); 
+    color: var(--text-main); 
+    min-height: 100vh; 
 }
 
 .container { 
@@ -24,98 +26,104 @@ body {
 }
 
 /* SIDEBAR */
-.sidebar { grid-area: sidebar; background: #000; border-right: 1px solid #222; }
-.logo-area { padding: 30px; font-weight: 900; color: var(--accent); font-size: 1.5rem; text-align: center; letter-spacing: 1px; }
-.logo-area span { color: white; }
+.sidebar { grid-area: sidebar; background: var(--sidebar-bg); border-right: 1px solid var(--border); }
+.logo-area { padding: 30px; font-weight: 800; color: var(--accent); font-size: 1.5rem; text-align: center; }
+.logo-area span { color: var(--text-main); }
 .menu a { 
     display: block; color: var(--text-grey); text-decoration: none; padding: 15px 25px; 
     margin: 10px; border-radius: 10px; transition: 0.3s;
 }
-.menu a.active, .menu a:hover { background: #1a1a1a; color: white; border-left: 4px solid var(--accent); }
+.menu a.active, .menu a:hover { background: #e8e4e0; color: var(--text-main); border-left: 4px solid var(--accent); }
 
-/* HEADER */
-.header { grid-area: header; background: #000; display: flex; align-items: center; padding: 0 40px; border-bottom: 1px solid #222; }
-
-/* MAIN CONTENT */
+/* HEADER & MAIN */
+.header { grid-area: header; background: var(--bg-page); display: flex; align-items: center; padding: 0 40px; border-bottom: 1px solid var(--border); }
 .main-content { 
     grid-area: main; 
     padding: 30px; 
     display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* S'adapte à la taille de l'écran */
+    /* Force 3 colonnes égales */
+    grid-template-columns: repeat(3, 1fr); 
+    grid-auto-rows: min-content; /* Permet aux cartes de s'adapter à leur contenu */
     gap: 25px; 
     overflow-y: auto; 
+    align-content: start; /* Garde les blocs en haut */
 }
 
-.card { background: var(--card-bg); border-radius: 20px; padding: 25px; border: 1px solid #252525; transition: 0.3s; }
-.card:hover { border-color: var(--accent); transform: translateY(-5px); }
+/* CARTES */
+.card { background: var(--card-bg); border-radius: 16px; padding: 25px; border: 1px solid var(--border); transition: 0.3s; }
+.card:hover { border-color: var(--accent); box-shadow: var(--border) 0px 5px 15px; }
 .card h3 { font-size: 0.75rem; color: var(--text-grey); text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; }
 
 /* WIDGETS */
-.card-wide { grid-column: 1 / -1; text-align: center; padding: 40px; }
-#clock { font-size: 4rem; font-weight: 800; color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); }
+#clock { font-size: 4rem; font-weight: 800; color: var(--accent); }
+.stat-circle { font-size: 3.5rem; font-weight: bold; color: var(--accent); }
+.progress-bar-bg { width: 100%; height: 10px; background: #eceae8; border-radius: 20px; margin-top: 20px; }
+.progress-bar-fill { width: 0%; height: 100%; background: var(--accent); border-radius: 20px; }
 
-.stat-circle { font-size: 3.5rem; font-weight: bold; color: #00ff88; text-align: center; }
-.progress-bar-bg { width: 100%; height: 12px; background: #000; border-radius: 20px; margin-top: 20px; overflow: hidden; border: 1px solid #333; }
-.progress-bar-fill { width: 0%; height: 100%; background: var(--accent); box-shadow: 0 0 15px var(--accent); transition: 0.8s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
-#stat-message { text-align: center; margin-top: 15px; color: var(--text-grey); font-size: 0.9rem; }
+/* TODO & NOTES */
+#todoInput, .note-input-area input, .note-input-area textarea {
+    width: 100%; background: #f9f7f5; border: 1px solid var(--border); 
+    color: var(--text-main); padding: 12px; border-radius: 8px; outline: none;
+}
+#addTodo, #saveNote { 
+    background: var(--accent); border: none; padding: 10px 20px; border-radius: 8px; color: white; cursor: pointer; 
+}
+#todoList li { background: #f4f2ef; padding: 12px; border-radius: 8px; margin-bottom: 8px; }
+#todoList li.completed { opacity: 0.5; border-left: 4px solid var(--accent); }
 
-/* TODO LIST */
-#todoInput { flex: 1; background: #000; border: 1px solid #333; color: white; padding: 12px; border-radius: 10px; outline: none; }
-#addTodo { background: var(--accent); border: none; padding: 0 20px; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; }
-#todoList { list-style: none; margin-top: 20px; }
-#todoList li { background: #222; padding: 12px 18px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-#todoList li.completed { opacity: 0.5; text-decoration: line-through; border-left: 4px solid #00ff88; }
-.del-btn { background: none; border: none; color: #555; cursor: pointer; font-size: 1.2rem; }
-
-/* RESPONSIVE PORTABLE */
 @media (max-width: 768px) {
     .container { grid-template-columns: 1fr; grid-template-areas: "header" "main"; }
     .sidebar { display: none; }
 }
 
-/* Style pour les champs de saisie du bloc-notes */
-.note-input-area input, 
-.note-input-area textarea {
-    width: 100%;
-    background: #111; /* Un peu plus clair que le fond général */
-    border: 1px solid #333;
-    color: white;
-    padding: 12px;
-    border-radius: 10px;
-    outline: none;
-    transition: 0.3s;
-    font-size: 0.95rem;
+.card-wide { 
+    grid-column: 1 / -1; 
+    text-align: center; /* Centre l'horloge et le texte */
+    padding: 60px 20px; /* Augmente le padding vertical pour doubler l'épaisseur visuelle */
 }
 
-/* Effet au survol et au clic (focus) */
-.note-input-area input:focus, 
-.note-input-area textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 8px var(--accent-glow);
-}
-
-/* Ajustement spécifique du textarea */
-.note-input-area textarea {
-    resize: vertical; /* Permet d'agrandir la zone */
-    min-height: 80px;
-    margin-top: 10px;
-}
-
-/* Style du bouton sauvegarder pour qu'il soit cohérent */
-#saveNote {
-    width: 100%;
-    margin-top: 15px;
-    padding: 12px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
+#todoList li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #f4f2ef;
+    border-radius: 8px;
+    margin-bottom: 8px;
     cursor: pointer;
     transition: 0.3s;
 }
 
-#saveNote:hover {
-    filter: brightness(1.2);
-    box-shadow: 0 0 15px var(--accent-glow);
+/* La case à cocher carrée */
+#todoList li::before {
+    content: "☐"; /* Case vide */
+    margin-right: 12px;
+    font-size: 1.4rem;
+    color: var(--accent);
+}
+
+/* Quand c'est coché */
+#todoList li.completed::before {
+    content: "☑"; /* Case cochée */
+}
+
+/* Ajout du texte "Fait/Pas fait" */
+#todoList li::after {
+    content: "À faire";
+    margin-left: auto;
+    font-size: 0.7rem;
+    background: #e0dcd9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--text-grey);
+}
+
+#todoList li.completed::after {
+    content: "Terminé";
+    background: var(--accent);
+    color: white;
+}
+
+#todoList li.completed span {
+    text-decoration: line-through;
+    color: var(--text-grey);
 }
