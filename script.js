@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(clockEl) clockEl.textContent = new Date().toLocaleTimeString('fr-FR'); 
     }, 1000);
 
-    // --- TO-DO LIST (Optimisée) ---
+    // --- TO-DO LIST ---
     const todoInput = document.getElementById('todoInput');
     const addBtn = document.getElementById('addTodo');
     const list = document.getElementById('todoList');
@@ -25,9 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if(!taskText) return;
 
         const li = document.createElement('li');
-        li.innerHTML = `<span>${taskText}</span><button class="del-btn">×</button>`;
+        li.innerHTML = `<span>${taskText}</span><button class="del-btn" style="margin-left:auto;">×</button>`;
         
-        // Clic sur la tâche pour cocher
         li.addEventListener('click', (e) => {
             if(e.target.tagName !== 'BUTTON') {
                 li.classList.toggle('completed');
@@ -35,8 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Suppression
-        li.querySelector('.del-btn').addEventListener('click', () => { 
+        li.querySelector('.del-btn').addEventListener('click', (e) => { 
+            e.stopPropagation(); 
             li.remove(); 
             updateStats(); 
         });
@@ -46,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateStats();
     });
 
-    // --- BLOC-NOTES (Corrigé) ---
+    // --- BLOC-NOTES ---
     const saveBtn = document.getElementById('saveNote');
     const nTitle = document.getElementById('nTitle');
     const nBody = document.getElementById('nBody');
@@ -56,13 +55,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if(!nTitle.value && !nBody.value) return;
 
         const noteDiv = document.createElement('div');
-        noteDiv.className = 'note-item';
-        noteDiv.style.cssText = "background:#222; padding:10px; border-radius:8px; margin-bottom:8px; position:relative;";
+        noteDiv.className = 'card'; 
+        noteDiv.style.marginBottom = "10px";
+        noteDiv.style.padding = "15px";
         
         noteDiv.innerHTML = `
             <strong>${nTitle.value || "Sans titre"}</strong>
-            <p style="font-size:0.85rem; color:#ccc;">${nBody.value}</p>
-            <button class="del-btn" style="position:absolute; right:10px; top:10px;">×</button>
+            <p style="font-size:0.9rem; color:var(--text-grey); margin-top:5px;">${nBody.value}</p>
+            <button class="del-btn" style="float:right;">×</button>
         `;
 
         noteDiv.querySelector('.del-btn').addEventListener('click', () => noteDiv.remove());
