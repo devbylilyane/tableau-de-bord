@@ -10,7 +10,7 @@
 
     <div class="container">
         <aside class="sidebar">
-    <div class="logo-area">LILY<span>tab</span></div>
+    <div class="logo-area">DASH<span>tab</span></div>
     <nav class="menu">
         <a href="#" class="active">🏠 Accueil</a>
         </nav>
@@ -37,6 +37,15 @@
                 <p id="stat-message">0 tâche accomplie</p>
             </div>
 
+            <div class="card card-todo">
+                <h3>Liste des tâches</h3>
+                <div class="input-row" style="display: flex; gap: 10px;">
+                    <input type="text" id="todoInput" placeholder="Ajouter un projet...">
+                    <button id="addTodo">Add</button>
+                </div>
+                <ul id="todoList"></ul>
+            </div>
+
             <div class="card card-notes">
                 <h3>Bloc-notes rapide</h3>
                 <div class="note-input-area">
@@ -47,14 +56,6 @@
                 <div id="savedNotes"></div>
             </div>
 
-            <div class="card card-todo">
-                <h3>Liste des tâches</h3>
-                <div class="input-row" style="display: flex; gap: 10px;">
-                    <input type="text" id="todoInput" placeholder="Ajouter un projet...">
-                    <button id="addTodo">Add</button>
-                </div>
-                <ul id="todoList"></ul>
-            </div>
         </main>
     </div>
     <script src="script.js"></script>
